@@ -66,11 +66,9 @@ def computeBug1(startpoint, goalpoint, obstacleslist, step_size):
 
     while "Failure," in message:
         path = circumnavigateObstacle(path[-1], goalpoint, path, obstacle, step_size)
-        # remove obstacle from obstacleslist
-        obstacleslist = [x for x in obstacleslist if x != obstacle]
-        removed_obstacles_list.append(obstacle)
-        # Continue from p_leave
-        message, path, obstacle = bugBase(path[-1], goalpoint, path, obstacleslist, step_size)
+        if path[-1] != goalpoint:
+            # Continue from p_leave
+            message, path, obstacle = bugBase(path[-1], goalpoint, path, obstacleslist, step_size)
     # Return fail if doing an illegal action e.g. crossing an obstacle
     
     for obstacle in removed_obstacles_list:
@@ -131,57 +129,14 @@ def circumnavigateObstacle(p_hit, goal_point, path, obstacle, step_size):
         # move until at point of leave
         current_point = computeNextMove(current_point, obstacle, step_size)
         path.append(current_point)
+    # Move one step away from polygon
+    directionalVector = ((goal_point[0]-current_point[0])/hw1.computeDistanceBetweenTwoPoints(current_point,goal_point),
+                    (goal_point[1]-current_point[1])/hw1.computeDistanceBetweenTwoPoints(current_point,goal_point),)
+    if hw1.computeDistanceBetweenTwoPoints(current_point, goal_point) > step_size:
+        current_point = (current_point[0]+directionalVector[0]*step_size, current_point[1]+directionalVector[1]*step_size,)
+        path.append(current_point)
+    else:
+        current_point = goal_point
+        path.append(current_point)
     return path
 
-def plot_robot_path(path, obstacles):
-    fig1, _ = plt.subplots(1)
-    for obstacle in obstacles:
-        obs = plt.Polygon(obstacle, fc = 'g')
-        plt.gca().add_patch(obs)
-    
-    x = []
-    y = []
-    for points in path:
-        x.append(points[0])
-        y.append(points[1])
-    plt.plot(x[1:-2], y[1:-2], 'bo')
-    plt.plot(x[0], y[0],'bx')
-    plt.plot(x[-1], y[-1], 'bx')
-    plt.show()
-
-def calculate_path_length(path):
-    total_distance = 0
-    for i in range(len(path)-1):
-        total_distance += hw1.computeDistanceBetweenTwoPoints(path[i], path[i+1])
-    return total_distance
-
-
-def plot_dist_vs_time(path):
-    fig2, _ = plt.subplots(1)
-    total_distance = calculate_path_length(path)
-    y = []
-    x = []
-    for i in range(len(path)-1):
-        y.append(hw1.computeDistanceBetweenTwoPoints(path[i], path[-1]))
-        x.append(0.01*i)
-    plt.title('Distance to goal as a function of time')
-    plt.xlim(0,5)
-    plt.ylim(0,6)
-    plt.grid()
-    plt.xlabel('t [s]')
-    plt.ylabel('d [m]')
-    plt.plot(x,y, 'g-')
-    plt.show()
-
-        
-
-startPoint  = (0,0)
-goalPoint   = (5,3)
-step_size   = 0.1
-obstaclesList = [((1,2,), (1,0,), (3,0,)), # Obstacle 1
-                ((2,3,), (4,1,), (5,2,)),] #Obstacle 2
-
-msg, path = computeBug1(startPoint, goalPoint, obstaclesList, step_size)
-plot_robot_path(path, obstaclesList)
-plot_dist_vs_time(path)
-print("The total path length is {:.2f} units".format(calculate_path_length(path)))
