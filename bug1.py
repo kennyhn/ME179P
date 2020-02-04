@@ -57,8 +57,9 @@ def computeBug1(startpoint, goalpoint, obstacleslist, step_size):
     # INPUT: endpoint is a tuple (x_end, y_end) in W_free
     # INPUT: obstaclelist contains lists of polygons,
     #   Where each list in obstaclelist contains the vertices of the polygons
-     # INPUT: step_size the maximum line-segment length between each points
+    # INPUT: step_size the maximum line-segment length between each points
     #   That is going to become the path of the robot
+    # OUTPUT: A list of all the points the robot is doing or a message saying it failed 
     start_time = time.time()
     path = [startpoint]
     message, path, obstacle = bugBase(startpoint, goalpoint, path, obstacleslist, step_size)
@@ -76,11 +77,11 @@ def computeBug1(startpoint, goalpoint, obstacleslist, step_size):
         for point in path:
             if hw2.computeTangentVectorToPolygon(obstacle, point)[0] == -1: # Inside polygon
                 # If a point in path was in polygon it is wrong and returns fail
-                return "Failure, no path was found from start to goal", []
+                return "Failure, no path was found from start to goal"
             
     total_time = time.time() - start_time
     print("The code took {}s to execute".format(total_time))
-    return "Success", path
+    return path
 
 def computeNextMove(current_point, obstacle, step_size):
     tan_vec, type_of_point = hw2.computeTangentVectorToPolygon(obstacle, current_point)

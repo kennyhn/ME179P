@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 
 
 def plot_robot_path(path, obstacles):
-    fig1, _ = plt.subplots(1)
     for obstacle in obstacles:
         obs = plt.Polygon(obstacle, fc = 'g')
         plt.gca().add_patch(obs)
@@ -32,8 +31,6 @@ def calculate_path_length(path):
 
 
 def plot_dist_vs_time(path):
-    fig2, _ = plt.subplots(1)
-    total_distance = calculate_path_length(path)
     y = []
     x = []
     for i in range(len(path)-1):
@@ -56,7 +53,7 @@ step_size   = 0.1
 obstaclesList = [((1,2,), (1,0,), (3,0,)), # Obstacle 1
                 ((2,3,), (4,1,), (5,2,)),] #Obstacle 2
 
-msg, path = computeBug1(startPoint, goalPoint, obstaclesList, step_size)
+path = computeBug1(startPoint, goalPoint, obstaclesList, step_size)
 plot_robot_path(path, obstaclesList)
 plot_dist_vs_time(path)
 print("The total path length is {:.2f} units".format(calculate_path_length(path)))
