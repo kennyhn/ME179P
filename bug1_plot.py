@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import ../hw1
+import hw1
 from bug1 import *
 
 import matplotlib.pyplot as plt
