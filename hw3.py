@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import queue as q
+import math
 # Input: a graph described by its adjacency table AdjTable and a start node
 # Output: a list of pointers parents describing the BFS tree rooted at
 # start
@@ -72,3 +73,19 @@ adjacencyTable = [[1, 2, 3, 4],
 
 startNode = 0
 goalNode = 7
+
+# Input: two angles alpha and beta between [-pi,pi)
+# Output: the distance theta between alpha and beta
+
+def coputeDistanceOnCircle(alpha,beta):
+    return (1/2)*((beta-alpha)%(2*math.pi)+(alpha-beta)%(2*math.pi)-abs((beta-alpha)%(2*math.pi)-(alpha-beta)%(2*math.pi)))
+        
+    
+        
+# Input: two points alpha and beta on 2-torus
+# Output: the distance theta between alpha and beta
+# alpha=(alpha1,alpha2) and beta=(beta1,beta2) are tuples
+
+def computeDistanceOnTorus(alpha,beta):
+    return math.sqrt(coputeDistanceOnCircle(alpha[0],beta[0])**2+coputeDistanceOnCircle(alpha[1],beta[1])**2)
+

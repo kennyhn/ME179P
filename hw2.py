@@ -12,7 +12,7 @@ def computeDistancePointToPolygon(P, q):
     shortestDist = 100000000000000
     if polygon.contains_points([q])[0]:
         print("q is within the polygon P")
-        return 0 #distance is 0 if q is within the polygon
+        return 0 #distance if q is within the polygon
     else:
         for i in range(len(P)): # Iterate through the vertices to find the line segment = edges
             if i == len(P)-1: # If last vertix
@@ -22,7 +22,7 @@ def computeDistancePointToPolygon(P, q):
             if dist < shortestDist:
                 # Find the shortest distance to the segment
                 shortestDist = dist
-        return shortestDist
+        return floor(shortestDist*100)/100
 
 def computeTangentVectorToPolygon(P, q):
     # if q is closest to a segment at the Polygon then it should return the unit length tangent vector parallell to
@@ -32,7 +32,7 @@ def computeTangentVectorToPolygon(P, q):
     polygon = path.Path(P)
     if polygon.contains_points([q])[0]:
         print("q is within the polygon P")
-        return -1  # No tangent vector if the point is inside the polygon
+        return -1, -1  # No tangent vector if the point is inside the polygon
     else:
         typeOfShortestPoint = -1
         shortestDist = 100000000000
@@ -58,7 +58,7 @@ def computeTangentVectorToPolygon(P, q):
         # Calculating the unit vector:
         if typeOfShortestPoint == 0:
             # If shortest point is on segment
-            scaling_factor = ((shortestpoint2[0]-shortestpoint1[0])**2+(shortestpoint2[1]-shortestpoint1[1])**2)**(1/2)
+            scaling_factor = computeDistanceBetweenTwoPoints(shortestpoint1, shortestpoint2)
 
             # Tangent vector is counter-clockwise meaning it starts at p1 and goes at direction p2
             u              = ((shortestpoint2[0]-shortestpoint1[0])/scaling_factor,
@@ -80,7 +80,6 @@ def computeTangentVectorToPolygon(P, q):
             u            = (-vec[1]/scaling_factor, vec[0]/scaling_factor)
         else:
             # Polygon is degenerate
-            return -1
-        return u
-
+            return -1, -2
+        return u, typeOfShortestPoint
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from math import sqrt
+from math import floor
 import numpy as np
 
 # As of now the code only works for points in R2
@@ -11,7 +12,7 @@ def checkPointsInR2(p):
 def checkDistinctPoints(p1, p2, tol):
     if checkPointsInR2(p1) and checkPointsInR2(p2): # See if it is in R2
         # Return true if distinct points and false if not
-        return not computeDistanceBetweenTwoPoints(p1,p2) < tol
+        return not (computeDistanceBetweenTwoPoints(p1,p2) < tol)
     else:
         print("The points p1 and p2 are not in R2")
         return False
