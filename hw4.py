@@ -11,7 +11,7 @@ def computeGridSukharev(n):
         print("n has to be a square number!")
         # Returns empty list if n != k^2 for some whole number k
     elif n<=0:
-        print("n has to be a positive square number")
+        print("n has to be a positive square number!")
     else:
         k = int(k)
         for i in range(k):
@@ -24,7 +24,7 @@ def computeGridSukharev(n):
 def computeGridRandom(n):
     sample_points = []
     if n <= 0:
-        print("You have to choose a positive number")
+        print("You have to choose a positive number!")
     else:
         # if n not a whole number we round it up either way
         n = math.ceil(n)
@@ -75,7 +75,6 @@ def computeGridHalton(n, b1, b2):
         return sample_points
 
 def test_grid_drawing(n):
-
     sukha_list      = computeGridSukharev(n)
     random_list     = computeGridRandom(n)
     halton_list     = computeGridHalton(n, 2, 3)
@@ -94,6 +93,8 @@ def test_grid_drawing(n):
         y_rand.append(random_list[i][1])
         x_halt.append(halton_list[i][0])
         y_halt.append(halton_list[i][1])
+
+   
 
     fig             = plt.figure(0)
     sub1            = fig.add_subplot(1,1,1)
@@ -118,9 +119,8 @@ def test_grid_drawing(n):
     plt.ylim(0,1)
     plt.grid()
     plt.plot(x_halt,y_halt, 'ko')
-
     plt.show()
 
-test_grid_drawing(100)
+test_grid_drawing(4)
 
     
