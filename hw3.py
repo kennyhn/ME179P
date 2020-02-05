@@ -19,7 +19,7 @@ def computeBFStree(AdjTable,start):
     # Insert start node
     node_queue.put(start) # Use 0-index element 0 in AdjTable is node 1
 
-    for i in range(len(AdjTable)):
+    for _ in range(len(AdjTable)):
         list_of_parents.append(None)
     list_of_parents[start] = start # SELF
     while node_queue.qsize() != 0:

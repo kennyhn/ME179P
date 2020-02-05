@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import hw1
-from bug1 import *
+import bug1
 
 import matplotlib.pyplot as plt
 
@@ -53,7 +53,7 @@ step_size   = 0.1
 obstaclesList = [((1,2,), (1,0,), (3,0,)), # Obstacle 1
                 ((2,3,), (4,1,), (5,2,)),] #Obstacle 2
 
-path = computeBug1(startPoint, goalPoint, obstaclesList, step_size)
+path = bug1.computeBug1(startPoint, goalPoint, obstaclesList, step_size)
 plot_robot_path(path, obstaclesList)
 plot_dist_vs_time(path)
 print("The total path length is {:.2f} units".format(calculate_path_length(path)))
