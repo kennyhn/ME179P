@@ -162,8 +162,8 @@ def main():
     n     = np.array([[1], [1], [1]]) # Function normalizes the vectors no matter length
 
     # Test functions
-    rot_mat = computeRMfromAA(theta, n)
     # Print the result
+    rot_mat = np.array([[0, -1/2, math.sqrt(3)/2], [0, math.sqrt(3)/2, 1/2], [-1, 0, 0]])
     print(rot_mat)
     theta_r, n_r = computeAAfromRM(rot_mat)
     print(f'theta: {theta_r}\nvector: {n_r}')
